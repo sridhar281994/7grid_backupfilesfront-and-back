@@ -238,15 +238,17 @@ class UserMatchScreen(Screen):
             pids = [data.get("p1_id"), data.get("p2_id"), data.get("p3_id")]
             turn = ids_or_turn
 
+        if storage:
+            storage.set_player_names(*players[: self.selected_mode])
+            storage.set_player_ids(pids)
+
         game = self.manager.get_screen("dicegame")
         if self.selected_mode == 2:
             game.set_stage_and_players(self.selected_amount, players[0], players[1], match_id=data.get("match_id"))
         else:
-            game.set_stage_and_players(self.selected_amount, players[0], players[1], players[2], match_id=data.get("match_id"))
-
-        if storage:
-            storage.set_player_names(*players[: self.selected_mode])
-            storage.set_player_ids(pids)
+            game.set_stage_and_players(
+                self.selected_amount, players[0], players[1], players[2], match_id=data.get("match_id")
+            )
 
         Clock.schedule_once(lambda dt: game._place_coins_near_portraits(), 0.1)
         self.manager.current = "dicegame"
