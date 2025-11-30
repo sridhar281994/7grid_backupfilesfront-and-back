@@ -412,116 +412,153 @@
                 size: self.size
                 source: "assets/common.png"
 
-        # Top bar (profile + wallet)
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint: 1, None
-            height: dp(55)
-            padding: [dp(8), dp(8)]
-            spacing: dp(8)
-            pos_hint: {"top": 1}
-
-            Image:
-                id: profile_pic
-                source: root.profile_image
-                size_hint: None, None
-                size: dp(45), dp(45)
-
-            Label:
-                id: welcome_label
-                text: ""
-                font_size: "16sp"
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
-                canvas.before:
-                    Color:
-                        rgba: 0, 0, 0, 0.5
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [8]
-
-            Widget:
-
-            Label:
-                id: wallet_label
-                text: "Wallet: ₹0"
-                font_size: "16sp"
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
-                canvas.before:
-                    Color:
-                        rgba: 0, 0, 0, 0.5
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [8]
-
-        # Stage selection box
         BoxLayout:
             orientation: "vertical"
-            size_hint: 0.85, None
-            height: dp(400)
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            spacing: dp(12)
-            padding: dp(18)
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.45
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [20]
-
-            Label:
-                text: "Select Game Stage"
-                font_size: "20sp"
-                color: 1, 1, 1, 1
-                size_hint_y: None
-                height: dp(40)
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
+            size_hint: 1, 1
+            padding: dp(16)
+            spacing: dp(16)
 
             BoxLayout:
-                id: stages_box
-                orientation: "vertical"
-                spacing: dp(10)
-                size_hint: 1, 1
-
-            BoxLayout:
-                orientation: "horizontal"
+                id: stage_top_bar
                 size_hint_y: None
-                height: dp(45)
+                height: max(dp(72), root.height * 0.12)
+                padding: [dp(12), dp(10)]
                 spacing: dp(10)
-                ToggleButton:
-                    id: two_player_mode
-                    text: "2 Player"
-                    group: "mode"
-                    state: "down"
-                    font_size: "15sp"
-                    on_release: app.selected_mode = 2
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0.35
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [14]
 
-                ToggleButton:
-                    id: three_player_mode
-                    text: "3 Player"
-                    group: "mode"
-                    font_size: "15sp"
-                    on_release: app.selected_mode = 3
+                Image:
+                    id: profile_pic
+                    source: root.profile_image
+                    size_hint: None, None
+                    size: min(self.height * 0.9, dp(64)), min(self.height * 0.9, dp(64))
 
-        # Logout Button (bottom-left)
-        Button:
-            text: "Logout"
-            size_hint: None, None
-            size: dp(100), dp(40)
-            pos_hint: {"x": 0.03, "y": 0.03}
-            font_size: "14sp"
-            background_color: 0.8, 0.1, 0.1, 0.9
-            on_release: root.logout_to_login()
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: 0.55
+                    spacing: dp(4)
+
+                    Label:
+                        id: welcome_label
+                        text: ""
+                        font_size: min(sp(20), root.width * 0.03)
+                        color: 1, 1, 1, 1
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
+                    Label:
+                        text: "Ready to play"
+                        font_size: min(sp(14), root.width * 0.025)
+                        color: 1, 1, 1, 0.85
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
+                Widget:
+
+                Label:
+                    id: wallet_label
+                    text: "Wallet: ₹0"
+                    size_hint_x: None
+                    width: max(dp(150), root.width * 0.2)
+                    font_size: min(sp(18), root.width * 0.03)
+                    color: 1, 1, 1, 1
+                    halign: "center"
+                    valign: "middle"
+                    text_size: self.size
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [10]
+
+            AnchorLayout:
+                size_hint_y: 1
+                anchor_x: "center"
+                anchor_y: "center"
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: None, None
+                    width: min(root.width * 0.95, dp(960))
+                    height: max(root.height * 0.55, dp(340))
+                    padding: dp(20)
+                    spacing: dp(14)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [24]
+
+                    Label:
+                        text: "Select Game Stage"
+                        font_size: min(sp(22), root.width * 0.035)
+                        color: 1, 1, 1, 1
+                        size_hint_y: None
+                        height: max(dp(42), root.height * 0.05)
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
+
+                    ScrollView:
+                        size_hint: 1, 1
+                        do_scroll_x: False
+
+                        BoxLayout:
+                            id: stages_box
+                            orientation: "vertical"
+                            spacing: dp(10)
+                            padding: [0, 0, 0, dp(4)]
+                            size_hint_y: None
+                            height: self.minimum_height
+
+                    BoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.08)
+                        spacing: dp(10)
+
+                        ToggleButton:
+                            id: two_player_mode
+                            text: "2 Player"
+                            group: "mode"
+                            state: "down"
+                            font_size: min(sp(16), root.width * 0.03)
+                            background_color: (0.15, 0.6, 0.9, 1) if self.state == "down" else (0.2, 0.2, 0.2, 0.9)
+                            on_release: app.selected_mode = 2
+
+                        ToggleButton:
+                            id: three_player_mode
+                            text: "3 Player"
+                            group: "mode"
+                            font_size: min(sp(16), root.width * 0.03)
+                            background_color: (0.15, 0.6, 0.9, 1) if self.state == "down" else (0.2, 0.2, 0.2, 0.9)
+                            on_release: app.selected_mode = 3
+
+            AnchorLayout:
+                size_hint_y: None
+                height: max(dp(60), root.height * 0.08)
+                anchor_x: "left"
+                anchor_y: "bottom"
+
+                Button:
+                    text: "Logout"
+                    size_hint: None, None
+                    width: min(dp(220), root.width * 0.4)
+                    height: max(dp(44), self.parent.height * 0.7)
+                    font_size: min(sp(18), root.width * 0.035)
+                    background_color: 0.8, 0.1, 0.1, 0.9
+                    on_release: root.logout_to_login()
 
 #:import dp kivy.metrics.dp
 #:import sp kivy.metrics.sp
