@@ -1,9 +1,11 @@
 #:import dp kivy.metrics.dp
+#:import sp kivy.metrics.sp
+
 <UserMatchRV@RecycleView>:
     viewclass: "Label"
 
 <WelcomeScreen>:
-    name: 'welcome'
+    name: "welcome"
 
     FloatLayout:
         canvas.before:
@@ -12,48 +14,53 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'assets/welcome.png'
+                source: "assets/welcome.png"
 
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint: 0.85, None
-            height: self.minimum_height
-            spacing: dp(20)
-            padding: dp(30)
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.5
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [20]
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size_hint: 1, 1
 
-            Label:
-                text: "Welcome to the Game!"
-                font_size: min(self.width * 0.08, sp(28))
-                color: 1, 1, 1, 1
-                size_hint_y: None
-                halign: "center"
-                valign: "middle"
-                text_size: self.width, None
-                height: self.texture_size[1] + dp(20)
+            BoxLayout:
+                orientation: "vertical"
+                spacing: dp(18)
+                padding: dp(24)
+                size_hint: None, None
+                width: min(root.width * 0.9, dp(420))
+                height: self.minimum_height
+                canvas.before:
+                    Color:
+                        rgba: 0, 0, 0, 0.55
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [24]
 
-            Button:
-                text: "Login"
-                font_size: min(self.width * 0.05, sp(18))
-                size_hint_y: None
-                height: dp(48)
-                background_color: (0.2, 0.5, 1, 1)
-                on_release: root.manager.current = 'login'
+                Label:
+                    text: "Welcome to the Game!"
+                    font_size: min(sp(30), root.width * 0.07)
+                    color: 1, 1, 1, 1
+                    size_hint_y: None
+                    halign: "center"
+                    valign: "middle"
+                    text_size: self.size
+                    height: self.texture_size[1] + dp(12)
 
-            Button:
-                text: "Register"
-                font_size: min(self.width * 0.05, sp(18))
-                size_hint_y: None
-                height: dp(48)
-                background_color: (0.3, 0.8, 0.3, 1)
-                on_release: root.manager.current = 'register'
+                Button:
+                    text: "Login"
+                    font_size: min(sp(18), root.width * 0.05)
+                    size_hint_y: None
+                    height: max(dp(50), root.height * 0.07)
+                    background_color: (0.2, 0.5, 1, 1)
+                    on_release: root.manager.current = "login"
+
+                Button:
+                    text: "Register"
+                    font_size: min(sp(18), root.width * 0.05)
+                    size_hint_y: None
+                    height: max(dp(50), root.height * 0.07)
+                    background_color: (0.3, 0.8, 0.3, 1)
+                    on_release: root.manager.current = "register"
 
         Label:
             id: star1
@@ -73,16 +80,21 @@
             size: dp(26), dp(26)
             pos_hint: {"x": 0.72, "y": 0.78}
 
-        Label:
-            text: "© 2025 SRTech Games"
-            font_size: min(self.width * 0.035, sp(14))
-            color: 1, 1, 1, 0.7
-            size_hint: None, None
-            size: self.texture_size
-            pos_hint: {"center_x": 0.5, "y": 0.02}
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "bottom"
+            padding: dp(12)
+
+            Label:
+                text: "© 2025 SRTech Games"
+                font_size: min(sp(14), root.width * 0.03)
+                color: 1, 1, 1, 0.75
+                size_hint: None, None
+                size: self.texture_size
 
 <LoginScreen>:
     name: "login"
+
     FloatLayout:
         canvas.before:
             Color:
@@ -92,77 +104,97 @@
                 size: self.size
                 source: "assets/login.png"
 
-        BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.85, 0.6
-            pos_hint: {"center_x": 0.5, "center_y": 0.55}
-            spacing: dp(15)
-            padding: dp(20)
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.4
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [20]
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size_hint: 1, 1
 
-            Label:
-                text: "Login (OTP to Email)"
-                font_size: sp(24)
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.width, None
-                size_hint_y: None
-                height: self.texture_size[1] + dp(20)
+            ScrollView:
+                size_hint: None, None
+                width: min(root.width * 0.9, dp(440))
+                height: min(root.height * 0.9, dp(520))
+                do_scroll_x: False
+                bar_width: dp(6)
 
-            TextInput:
-                id: phone_input
-                hint_text: "Enter 10-digit Phone"
-                input_filter: "int"
-                max_text_length: 10
-                multiline: False
-                font_size: sp(18)
-                size_hint_y: None
-                height: dp(45)
-                background_color: (1, 1, 1, 0.8)
-                foreground_color: (0, 0, 0, 1)
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    padding: dp(20)
+                    spacing: dp(14)
+                    height: self.minimum_height
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [24]
 
-            TextInput:
-                id: otp_input
-                hint_text: "Enter OTP (from your email)"
-                multiline: False
-                font_size: sp(18)
-                size_hint_y: None
-                height: dp(45)
-                background_color: (1, 1, 1, 0.8)
-                foreground_color: (0, 0, 0, 1)
+                    Label:
+                        text: "Login (OTP to Email)"
+                        font_size: min(sp(24), root.width * 0.045)
+                        color: 1, 1, 1, 1
+                        size_hint_y: None
+                        height: self.texture_size[1] + dp(10)
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
+
+                    TextInput:
+                        id: phone_input
+                        hint_text: "Enter 10-digit Phone"
+                        input_filter: "int"
+                        max_text_length: 10
+                        multiline: False
+                        font_size: sp(18)
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
+
+                    TextInput:
+                        id: otp_input
+                        hint_text: "Enter OTP (from your email)"
+                        multiline: False
+                        font_size: sp(18)
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
+
+                    Button:
+                        text: "Send OTP"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.065)
+                        font_size: min(sp(18), root.width * 0.045)
+                        background_color: (0.2, 0.5, 1, 1)
+                        on_release: root.send_otp_to_user()
+
+                    Button:
+                        text: "Verify & Login"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.065)
+                        font_size: min(sp(18), root.width * 0.045)
+                        background_color: (0.25, 0.8, 0.4, 1)
+                        on_release: root.verify_and_login()
+
+        AnchorLayout:
+            anchor_x: "left"
+            anchor_y: "bottom"
+            padding: dp(16)
 
             Button:
-                text: "Send OTP"
-                size_hint_y: None
-                height: dp(45)
-                font_size: sp(18)
-                on_release: root.send_otp_to_user()
-
-            Button:
-                text: "Verify & Login"
-                size_hint_y: None
-                height: dp(45)
-                font_size: sp(18)
-                on_release: root.verify_and_login()
-
-        Button:
-            text: "Back"
-            font_size: sp(18)
-            size_hint: None, None
-            size: dp(100), dp(45)
-            pos_hint: {"x": 0.02, "y": 0.02}
-            background_color: (0.2, 0.2, 0.2, 0.8)
-            on_release: root.go_back()
+                text: "Back"
+                font_size: sp(16)
+                size_hint: None, None
+                width: max(dp(120), root.width * 0.25)
+                height: max(dp(44), root.height * 0.06)
+                background_color: (0.2, 0.2, 0.2, 0.85)
+                on_release: root.go_back()
 
 <RegisterScreen>:
     name: "register"
+
     FloatLayout:
         canvas.before:
             Color:
@@ -172,98 +204,111 @@
                 size: self.size
                 source: "assets/login.png"
 
-        BoxLayout:
-            orientation: "vertical"
-            size_hint: 0.85, None
-            height: self.minimum_height
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            spacing: dp(12)
-            padding: dp(18)
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 0.45
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [20]
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+            size_hint: 1, 1
 
-            Label:
-                text: "Create your account"
-                font_size: "26sp"
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.width, None
-                size_hint_y: None
-                height: self.texture_size[1] + dp(12)
+            ScrollView:
+                size_hint: None, None
+                width: min(root.width * 0.92, dp(460))
+                height: min(root.height * 0.95, dp(580))
+                do_scroll_x: False
+                bar_width: dp(6)
 
-            TextInput:
-                id: name_input
-                hint_text: "Full Name"
-                size_hint_y: None
-                height: dp(48)
-                font_size: "18sp"
-                background_color: (1, 1, 1, 0.85)
-                foreground_color: (0, 0, 0, 1)
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    padding: dp(20)
+                    spacing: dp(12)
+                    height: self.minimum_height
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.5
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [24]
 
-            TextInput:
-                id: phone_input
-                hint_text: "Phone (10 digits)"
-                input_filter: "int"
-                max_text_length: 10
-                size_hint_y: None
-                height: dp(48)
-                font_size: "18sp"
-                background_color: (1, 1, 1, 0.85)
-                foreground_color: (0, 0, 0, 1)
+                    Label:
+                        text: "Create your account"
+                        font_size: min(sp(26), root.width * 0.05)
+                        color: 1, 1, 1, 1
+                        size_hint_y: None
+                        height: self.texture_size[1] + dp(8)
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
 
-            TextInput:
-                id: email_input
-                hint_text: "Email"
-                size_hint_y: None
-                height: dp(48)
-                font_size: "18sp"
-                background_color: (1, 1, 1, 0.85)
-                foreground_color: (0, 0, 0, 1)
+                    TextInput:
+                        id: name_input
+                        hint_text: "Full Name"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        font_size: sp(18)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
 
-            TextInput:
-                id: password_input
-                hint_text: "Password"
-                password: True
-                size_hint_y: None
-                height: dp(48)
-                font_size: "18sp"
-                background_color: (1, 1, 1, 0.85)
-                foreground_color: (0, 0, 0, 1)
+                    TextInput:
+                        id: phone_input
+                        hint_text: "Phone (10 digits)"
+                        input_filter: "int"
+                        max_text_length: 10
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        font_size: sp(18)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
 
-            TextInput:
-                id: upi_input
-                hint_text: "UPI ID (optional)"
-                size_hint_y: None
-                height: dp(48)
-                font_size: "18sp"
-                background_color: (1, 1, 1, 0.85)
-                foreground_color: (0, 0, 0, 1)
+                    TextInput:
+                        id: email_input
+                        hint_text: "Email"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        font_size: sp(18)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
 
-            BoxLayout:
-                size_hint_y: None
-                height: dp(48)
-                spacing: dp(10)
-                Button:
-                    text: "Register"
-                    font_size: "18sp"
-                    background_color: (0.3, 0.7, 0.3, 1)
-                    on_release: root.save_profile()
+                    TextInput:
+                        id: password_input
+                        hint_text: "Password"
+                        password: True
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        font_size: sp(18)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
 
-        Button:
-            text: "Back"
-            size_hint: None, None
-            size: dp(90), dp(42)
-            pos_hint: {"x": 0.02, "y": 0.02}
-            background_color: (0.15, 0.15, 0.15, 0.8)
-            font_size: "16sp"
-            on_release: app.root.current = "welcome"
+                    TextInput:
+                        id: upi_input
+                        hint_text: "UPI ID (optional)"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.06)
+                        font_size: sp(18)
+                        background_color: (1, 1, 1, 0.85)
+                        foreground_color: (0, 0, 0, 1)
 
+                    Button:
+                        text: "Register"
+                        size_hint_y: None
+                        height: max(dp(50), root.height * 0.065)
+                        font_size: min(sp(18), root.width * 0.045)
+                        background_color: (0.3, 0.7, 0.3, 1)
+                        on_release: root.save_profile()
+
+        AnchorLayout:
+            anchor_x: "left"
+            anchor_y: "bottom"
+            padding: dp(16)
+
+            Button:
+                text: "Back"
+                size_hint: None, None
+                width: max(dp(110), root.width * 0.22)
+                height: max(dp(44), root.height * 0.06)
+                font_size: sp(16)
+                background_color: (0.15, 0.15, 0.15, 0.85)
+                on_release: app.root.current = "welcome"
 
 <SettingsScreen>:
     profile_image: root.profile_image
@@ -277,130 +322,151 @@
                 size: self.size
                 source: "assets/common.png"
 
-        ScrollView:
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
             size_hint: 1, 1
-            do_scroll_y: True
 
-            BoxLayout:
-                orientation: "vertical"
-                size_hint_y: None
-                height: self.minimum_height
-                spacing: dp(10)
-                padding: dp(15)
+            ScrollView:
+                size_hint: None, None
+                width: min(root.width * 0.9, dp(520))
+                height: min(root.height * 0.95, dp(640))
+                do_scroll_x: False
+                bar_width: dp(6)
 
-                Button:
-                    size_hint: None, None
-                    size: dp(90), dp(90)
-                    pos_hint: {"center_x": 0.5}
-                    background_normal: root.profile_image
-                    background_down: root.profile_image
-                    border: (0,0,0,0)
-                    on_release: root.change_profile_picture()
-
-                Label:
-                    id: wallet_label
-                    text: "Wallet: ₹0"
-                    font_size: "17sp"
-                    color: 0, 0.6, 0, 1
+                BoxLayout:
+                    orientation: "vertical"
                     size_hint_y: None
-                    height: dp(28)
-                    halign: "center"
-                    valign: "middle"
-                    text_size: self.size
+                    padding: dp(18)
+                    spacing: dp(12)
+                    height: self.minimum_height
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [24]
 
-                TextInput:
-                    id: name_input
-                    hint_text: "Your Name"
-                    font_size: "16sp"
-                    size_hint_y: None
-                    height: dp(42)
-                    background_color: (1,1,1,0.8)
-                    padding: dp(10)
+                    Button:
+                        size_hint: None, None
+                        size: dp(110), dp(110)
+                        pos_hint: {"center_x": 0.5}
+                        background_normal: root.profile_image
+                        background_down: root.profile_image
+                        border: (0, 0, 0, 0)
+                        on_release: root.change_profile_picture()
 
-                TextInput:
-                    id: phone_input
-                    hint_text: "Phone Number"
-                    readonly: True
-                    font_size: "16sp"
-                    size_hint_y: None
-                    height: dp(42)
-                    background_color: (0.95,0.95,0.95,1)
-                    padding: dp(10)
+                    Label:
+                        id: wallet_label
+                        text: "Wallet: ₹0"
+                        font_size: sp(18)
+                        color: 0, 0.8, 0.2, 1
+                        size_hint_y: None
+                        height: dp(30)
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
 
-                TextInput:
-                    id: desc_input
-                    hint_text: "Description"
-                    font_size: "16sp"
-                    size_hint_y: None
-                    height: dp(60)
-                    background_color: (1,1,1,0.8)
-                    padding: dp(10)
+                    TextInput:
+                        id: name_input
+                        hint_text: "Your Name"
+                        font_size: sp(16)
+                        size_hint_y: None
+                        height: max(dp(46), root.height * 0.06)
+                        background_color: (1, 1, 1, 0.9)
+                        padding: dp(10)
 
-                TextInput:
-                    id: upi_input
-                    hint_text: "UPI ID"
-                    font_size: "16sp"
-                    size_hint_y: None
-                    height: dp(42)
-                    background_color: (1,1,1,0.8)
-                    padding: dp(10)
+                    TextInput:
+                        id: phone_input
+                        hint_text: "Phone Number"
+                        readonly: True
+                        font_size: sp(16)
+                        size_hint_y: None
+                        height: max(dp(46), root.height * 0.06)
+                        background_color: (0.95, 0.95, 0.95, 1)
+                        padding: dp(10)
 
-                ToggleButton:
-                    id: audio_toggle
-                    text: "Sound ON" if root.music_playing else "Sound OFF"
-                    font_size: "15sp"
-                    size_hint_y: None
-                    height: dp(40)
-                    background_color: (0.2,0.6,1,0.9) if self.state == "down" else (0.7,0.7,0.7,0.9)
-                    color: (1,1,1,1)
-                    on_release:
-                        root.toggle_audio()
-                        self.text = "Sound ON" if root.music_playing else "Sound OFF"
+                    TextInput:
+                        id: desc_input
+                        hint_text: "Description"
+                        font_size: sp(16)
+                        size_hint_y: None
+                        height: max(dp(70), root.height * 0.08)
+                        background_color: (1, 1, 1, 0.9)
+                        padding: dp(10)
 
-                Button:
-                    text: "Recharge"
-                    size_hint_y: None
-                    height: dp(40)
-                    font_size: "15sp"
-                    background_color: (0.9,0.6,0.1,1)
-                    color: (1,1,1,1)
-                    on_release: root.recharge()
+                    TextInput:
+                        id: upi_input
+                        hint_text: "UPI ID"
+                        font_size: sp(16)
+                        size_hint_y: None
+                        height: max(dp(46), root.height * 0.06)
+                        background_color: (1, 1, 1, 0.9)
+                        padding: dp(10)
 
-                Button:
-                    text: "Withdraw"
-                    size_hint_y: None
-                    height: dp(40)
-                    font_size: "15sp"
-                    background_color: (0.9,0.6,0.1,1)
-                    color: (1,1,1,1)
-                    on_release: root.withdraw()
+                    ToggleButton:
+                        id: audio_toggle
+                        text: "Sound ON" if root.music_playing else "Sound OFF"
+                        font_size: sp(16)
+                        size_hint_y: None
+                        height: max(dp(44), root.height * 0.06)
+                        background_color: (0.2, 0.6, 1, 0.9) if self.state == "down" else (0.35, 0.35, 0.35, 0.9)
+                        color: (1, 1, 1, 1)
+                        on_release:
+                            root.toggle_audio()
+                            self.text = "Sound ON" if root.music_playing else "Sound OFF"
 
-                Button:
-                    text: "Wallet History"
-                    size_hint_y: None
-                    height: dp(40)
-                    font_size: "15sp"
-                    background_color: (0.9,0.6,0.1,1)
-                    color: (1,1,1,1)
-                    on_release: root.show_wallet_history()
+                    GridLayout:
+                        cols: 2
+                        size_hint_y: None
+                        height: self.minimum_height
+                        spacing: dp(10)
 
-                Button:
-                    text: "Save Settings"
-                    size_hint_y: None
-                    height: dp(40)
-                    font_size: "15sp"
-                    background_color: (0.2,0.7,0.2,1)
-                    color: (1,1,1,1)
-                    on_release: root.save_settings()
+                        Button:
+                            text: "Recharge"
+                            size_hint_y: None
+                            height: max(dp(44), root.height * 0.06)
+                            font_size: sp(15)
+                            background_color: (0.9, 0.6, 0.1, 1)
+                            color: (1, 1, 1, 1)
+                            on_release: root.recharge()
 
-                Button:
-                    text: "Back"
-                    size_hint_y: None
-                    height: dp(38)
-                    font_size: "15sp"
-                    background_color: (0.7,0.2,0.2,1)
-                    color: (1,1,1,1)
-                    on_release: root.manager.current = "stage"
+                        Button:
+                            text: "Withdraw"
+                            size_hint_y: None
+                            height: max(dp(44), root.height * 0.06)
+                            font_size: sp(15)
+                            background_color: (0.9, 0.6, 0.1, 1)
+                            color: (1, 1, 1, 1)
+                            on_release: root.withdraw()
+
+                        Button:
+                            text: "Wallet History"
+                            size_hint_y: None
+                            height: max(dp(44), root.height * 0.06)
+                            font_size: sp(15)
+                            background_color: (0.9, 0.6, 0.1, 1)
+                            color: (1, 1, 1, 1)
+                            on_release: root.show_wallet_history()
+
+                        Button:
+                            text: "Save Settings"
+                            size_hint_y: None
+                            height: max(dp(44), root.height * 0.06)
+                            font_size: sp(15)
+                            background_color: (0.2, 0.7, 0.2, 1)
+                            color: (1, 1, 1, 1)
+                            on_release: root.save_settings()
+
+                    Button:
+                        text: "Back"
+                        size_hint_y: None
+                        height: max(dp(44), root.height * 0.06)
+                        font_size: sp(16)
+                        background_color: (0.7, 0.2, 0.2, 1)
+                        color: (1, 1, 1, 1)
+                        on_release: root.manager.current = "stage"
 
 <StageScreen>:
     FloatLayout:
@@ -560,9 +626,6 @@
                     background_color: 0.8, 0.1, 0.1, 0.9
                     on_release: root.logout_to_login()
 
-#:import dp kivy.metrics.dp
-#:import sp kivy.metrics.sp
-
 <UserMatchScreen>:
     name: "usermatch"
 
@@ -575,110 +638,147 @@
                 size: self.size
                 source: "assets/common.png"
 
-        # Player 1
         BoxLayout:
-            id: p1_box
             orientation: "vertical"
-            spacing: dp(4)
-            size_hint: None, None
-            size: dp(100), dp(120)
-            pos_hint: {"center_x": 0.5, "top": 0.88}
-
-            Image:
-                id: portrait_p1
-                source: "assets/default.png"
-                size_hint: None, None
-                size: dp(90), dp(90)
+            size_hint: 1, 1
+            padding: dp(16)
+            spacing: dp(16)
 
             Label:
-                id: p1_name
-                text: root.player1_name
-                font_size: sp(16)
+                text: "Matchmaking"
+                font_size: min(sp(24), root.width * 0.04)
                 color: 1, 1, 1, 1
+                size_hint_y: None
+                height: dp(36)
                 halign: "center"
                 valign: "middle"
                 text_size: self.size
 
-        Label:
-            text: "VS"
-            font_size: sp(20)
-            color: 1, 1, 1, 1
-            pos_hint: {"center_x": 0.5, "center_y": 0.64}
+            GridLayout:
+                cols: 1 if root.width < dp(640) else 3
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: dp(12)
+                row_force_default: True
+                row_default_height: max(dp(150), root.height * 0.22)
 
-        # Player 2
-        BoxLayout:
-            id: p2_box
-            orientation: "vertical"
-            spacing: dp(4)
-            size_hint: None, None
-            size: dp(100), dp(120)
-            pos_hint: {"center_x": 0.5, "center_y": 0.45 if root.selected_mode == 3 else 0.27}
+                BoxLayout:
+                    id: p1_box
+                    orientation: "vertical"
+                    spacing: dp(6)
+                    padding: dp(10)
+                    size_hint_y: None
+                    height: max(dp(150), root.height * 0.22)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
 
-            Image:
-                id: portrait_p2
-                source: "assets/default.png"
-                size_hint: None, None
-                size: dp(90), dp(90)
-                canvas.before:
-                    PushMatrix
-                    Rotate:
-                        angle: root.p2_angle
-                        origin: self.center
-                canvas.after:
-                    PopMatrix
+                    Image:
+                        id: portrait_p1
+                        source: "assets/default.png"
+                        size_hint: None, None
+                        size: dp(96), dp(96)
+                        pos_hint: {"center_x": 0.5}
 
-            Label:
-                id: p2_name
-                text: root.player2_name
-                font_size: sp(16)
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
+                    Label:
+                        id: p1_name
+                        text: root.player1_name
+                        font_size: sp(16)
+                        color: 1, 1, 1, 1
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
 
-        Label:
-            text: "VS"
-            font_size: sp(20)
-            color: 1, 1, 1, 1
-            pos_hint: {"center_x": 0.5, "center_y": 0.28}
-            opacity: 1 if root.selected_mode == 3 else 0
+                BoxLayout:
+                    id: p2_box
+                    orientation: "vertical"
+                    spacing: dp(6)
+                    padding: dp(10)
+                    size_hint_y: None
+                    height: max(dp(150), root.height * 0.22)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
 
-        # Player 3 (only for 3-player mode)
-        BoxLayout:
-            id: p3_box
-            orientation: "vertical"
-            spacing: dp(4)
-            size_hint: None, None
-            size: dp(100), dp(120)
-            pos_hint: {"center_x": 0.5, "y": 0.05}
-            opacity: 1 if root.selected_mode == 3 else 0
-            disabled: False if root.selected_mode == 3 else True
+                    AnchorLayout:
+                        size_hint: None, None
+                        size: dp(96), dp(96)
+                        pos_hint: {"center_x": 0.5}
+                        Image:
+                            id: portrait_p2
+                            source: "assets/default.png"
+                            size_hint: None, None
+                            size: dp(96), dp(96)
+                            canvas.before:
+                                PushMatrix
+                                Rotate:
+                                    angle: root.p2_angle if root._p2_rotating else 0
+                                    origin: self.center
+                            canvas.after:
+                                PopMatrix
 
-            Image:
-                id: portrait_p3
-                source: "assets/default.png"
-                size_hint: None, None
-                size: dp(90), dp(90)
-                canvas.before:
-                    PushMatrix
-                    Rotate:
-                        angle: root.p3_angle
-                        origin: self.center
-                canvas.after:
-                    PopMatrix
+                    Label:
+                        id: p2_name
+                        text: root.player2_name
+                        font_size: sp(16)
+                        color: 1, 1, 1, 1
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
 
-            Label:
-                id: p3_name
-                text: root.player3_name
-                font_size: sp(16)
-                color: 1, 1, 1, 1
-                halign: "center"
-                valign: "middle"
-                text_size: self.size
+                BoxLayout:
+                    id: p3_box
+                    orientation: "vertical"
+                    spacing: dp(6)
+                    padding: dp(10)
+                    size_hint_y: None
+                    height: max(dp(150), root.height * 0.22)
+                    opacity: 1 if root.selected_mode == 3 else 0
+                    disabled: False if root.selected_mode == 3 else True
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
 
-# -----------------------------
-# Inline Popup for Free Play
-# -----------------------------
+                    AnchorLayout:
+                        size_hint: None, None
+                        size: dp(96), dp(96)
+                        pos_hint: {"center_x": 0.5}
+                        Image:
+                            id: portrait_p3
+                            source: "assets/default.png"
+                            size_hint: None, None
+                            size: dp(96), dp(96)
+                            canvas.before:
+                                PushMatrix
+                                Rotate:
+                                    angle: root.p3_angle if root._p3_rotating else 0
+                                    origin: self.center
+                            canvas.after:
+                                PopMatrix
+
+                    Label:
+                        id: p3_name
+                        text: root.player3_name
+                        font_size: sp(16)
+                        color: 1, 1, 1, 1
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
+
+            Widget:
+
 <BotPromptPopup@Popup>:
     title: "No Match Found"
     size_hint: None, None
@@ -695,7 +795,7 @@
             text: "No players found.\nDo you want to play with bots?"
             halign: "center"
             valign: "middle"
-            color: 1,1,1,1
+            color: 1, 1, 1, 1
             text_size: self.width, None
 
         BoxLayout:
@@ -707,19 +807,14 @@
             Button:
                 text: "Yes"
                 on_release:
-                    print("[DEBUG] Yes pressed")
                     root.dismiss()
                     root.screen._fallback_to_bots(root.screen.player1_name)
 
             Button:
                 text: "No"
                 on_release:
-                    print("[DEBUG] No pressed")
                     root.dismiss()
                     root.screen.manager.current = "stage"
-
-#:import dp kivy.metrics.dp
-#:import sp kivy.metrics.sp
 
 <ButtonImage@ButtonBehavior+Image>:
 
@@ -735,240 +830,341 @@
                 size: self.size
                 source: "assets/game.png"
 
-        # Player 1 (top-left)
         BoxLayout:
-            orientation: 'horizontal'
-            size_hint: None, None
-            size: (root.width * 0.35), (root.height * 0.1)
-            pos_hint: {"top": 0.98, "x": 0.02}
-            spacing: dp(6)
-
-            RelativeLayout:
-                size_hint: None, None
-                size: dp(55), dp(55)
-                ButtonImage:
-                    id: p1_pic
-                    source: "assets/default.png"
-                    on_release: root.show_player_info(0)
-                Widget:
-                    id: p1_overlay
-                    size_hint: 1, 1
-                    opacity: 0
-                    canvas.before:
-                        Color:
-                            rgba: 1, 0, 0, self.opacity
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
-            Label:
-                id: p1_name_label
-                text: root.player1_name
-                font_size: sp(15)
-                color: 1, 1, 1, 1
-
-        # Player 2 (top-right)
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint: None, None
-            size: (root.width * 0.35), (root.height * 0.1)
-            pos_hint: {"top": 0.98, "right": 0.98}
-            spacing: dp(6)
-
-            Label:
-                id: p2_name_label
-                text: root.player2_name
-                font_size: sp(15)
-                color: 1, 1, 1, 1
-
-            RelativeLayout:
-                size_hint: None, None
-                size: dp(55), dp(55)
-                ButtonImage:
-                    id: p2_pic
-                    source: "assets/default.png"
-                    on_release: root.show_player_info(1)
-                Widget:
-                    id: p2_overlay
-                    size_hint: 1, 1
-                    opacity: 0
-                    canvas.before:
-                        Color:
-                            rgba: 1, 0, 0, self.opacity
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
-        # Player 3 (bottom-right)
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint: None, None
-            size: (root.width * 0.35), (root.height * 0.1)
-            pos_hint: {"x": 0.65, "y": 0.08}  # slightly raised to make coin visible
-            spacing: dp(6)
-            opacity: 1 if root.player3_name and root._num_players == 3 else 0
-            disabled: False if root.player3_name and root._num_players == 3 else True
-
-            RelativeLayout:
-                size_hint: None, None
-                size: dp(55), dp(55)
-                ButtonImage:
-                    id: p3_pic
-                    source: "assets/default.png"
-                    on_release: root.show_player_info(2)
-                Widget:
-                    id: p3_overlay
-                    size_hint: 1, 1
-                    opacity: 0
-                    canvas.before:
-                        Color:
-                            rgba: 1, 0, 0, self.opacity
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-
-            Label:
-                id: p3_name_label
-                text: root.player3_name
-                font_size: sp(15)
-                color: 1, 1, 1, 1
-
-        # Stage label
-        Label:
-            id: stage_label
-            text: root.stage_label
-            font_size: sp(18)
-            color: 1, 1, 1, 1
-            pos_hint: {"top": 0.93, "center_x": 0.5}
-
-        # Dice (bottom-left)
-        AnchorLayout:
-            anchor_x: "left"
-            anchor_y: "bottom"
-            size_hint: None, None
-            size: dp(100), dp(100)
-            pos_hint: {"x": 0.03, "y": 0.03}
-
-            PolygonDice:
-                id: dice_button
-                size_hint: None, None
-                size: dp(80), dp(80)
-                on_release: root.roll_dice()
-
-        # Board
-        AnchorLayout:
-            anchor_x: "center"
-            anchor_y: "center"
+            orientation: "vertical"
             size_hint: 1, 1
+            padding: dp(16)
+            spacing: dp(12)
 
             BoxLayout:
-                orientation: 'vertical'
-                size_hint: (0.45 if root.width > root.height else 0.35), 0.75
-                padding: dp(10)
-                spacing: dp(4)
-                canvas.before:
-                    Color:
-                        rgba: 0, 0, 0, 0.4
-                    RoundedRectangle:
-                        pos: self.pos
-                        size: self.size
-                        radius: [dp(14)]
+                orientation: "horizontal"
+                size_hint_y: None
+                height: max(dp(96), root.height * 0.15)
+                spacing: dp(12)
 
-                GridLayout:
-                    id: board
-                    cols: 1
-                    rows: 8
-                    size_hint_y: 1
-                    row_force_default: True
-                    on_size: self.row_default_height = self.height / 8
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: dp(10)
+                    spacing: dp(8)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
+
+                    RelativeLayout:
+                        size_hint: None, None
+                        size: dp(64), dp(64)
+                        ButtonImage:
+                            id: p1_pic
+                            source: "assets/default.png"
+                            on_release: root.show_player_info(0)
+                        Widget:
+                            id: p1_overlay
+                            size_hint: 1, 1
+                            opacity: 0
+                            canvas.before:
+                                Color:
+                                    rgba: 1, 0, 0, self.opacity
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
 
                     Label:
-                        id: box_0
-                        text: "Start"
+                        id: p1_name_label
+                        text: root.player1_name
+                        font_size: sp(16)
                         color: 1, 1, 1, 1
-                        canvas.before:
-                            Color:
-                                rgba: 0.4, 0.2, 0.1, 1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: 0.3
+                    padding: dp(8)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.35
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
 
                     Label:
-                        id: box_1
-                        text: ""
-                        canvas.before:
-                            Color:
-                                rgba: 0, 0, 0, 0.1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        text: root.stage_label
+                        id: stage_label
+                        font_size: min(sp(20), root.width * 0.04)
+                        color: 1, 1, 1, 1
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
 
                     Label:
-                        id: box_2
-                        text: ""
-                        canvas.before:
-                            Color:
-                                rgba: 1, 1, 1, 0.2
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        text: "Tap the dice or wait for auto-roll"
+                        font_size: sp(13)
+                        color: 1, 1, 1, 0.8
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    padding: dp(10)
+                    spacing: dp(8)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
+
+                    Label:
+                        id: p2_name_label
+                        text: root.player2_name
+                        font_size: sp(16)
+                        color: 1, 1, 1, 1
+                        halign: "right"
+                        valign: "middle"
+                        text_size: self.size
 
                     RelativeLayout:
-                        id: box_3
-                        canvas.before:
-                            Color:
-                                rgba: 0, 0, 0, 0.1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-                        Image:
-                            source: "assets/danger.png"
+                        size_hint: None, None
+                        size: dp(64), dp(64)
+                        ButtonImage:
+                            id: p2_pic
+                            source: "assets/default.png"
+                            on_release: root.show_player_info(1)
+                        Widget:
+                            id: p2_overlay
+                            size_hint: 1, 1
+                            opacity: 0
+                            canvas.before:
+                                Color:
+                                    rgba: 1, 0, 0, self.opacity
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, 1
+                spacing: dp(12)
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: 0.3
+                    padding: dp(12)
+                    spacing: dp(12)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
+
+                    AnchorLayout:
+                        size_hint_y: None
+                        height: max(dp(140), root.height * 0.2)
+
+                        PolygonDice:
+                            id: dice_button
+                            size_hint: None, None
+                            size: max(dp(90), root.width * 0.12), max(dp(90), root.width * 0.12)
+                            on_release: root.roll_dice()
 
                     Label:
-                        id: box_4
-                        text: ""
-                        canvas.before:
-                            Color:
-                                rgba: 1, 1, 1, 0.2
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        text: "Auto-roll in 10s if idle"
+                        font_size: sp(13)
+                        color: 1, 1, 1, 0.8
+                        halign: "center"
+                        valign: "middle"
+                        text_size: self.size
+
+                    Button:
+                        text: "GIVE UP"
+                        size_hint_y: None
+                        height: max(dp(48), root.height * 0.07)
+                        background_color: (1, 0, 0, 0.8)
+                        on_release: root.force_player_exit()
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint: 1, 1
+                    padding: dp(12)
+                    spacing: dp(10)
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.4
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [24]
 
                     Label:
-                        id: box_5
-                        text: ""
-                        canvas.before:
-                            Color:
-                                rgba: 0, 0, 0, 0.1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        text: "Game Board"
+                        font_size: min(sp(18), root.width * 0.035)
+                        color: 1, 1, 1, 1
+                        size_hint_y: None
+                        height: dp(32)
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
 
-                    Label:
-                        id: box_6
-                        text: ""
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint: 1, 1
+                        padding: dp(10)
                         canvas.before:
                             Color:
-                                rgba: 1, 1, 1, 0.2
-                            Rectangle:
+                                rgba: 0, 0, 0, 0.35
+                            RoundedRectangle:
                                 pos: self.pos
                                 size: self.size
+                                radius: [18]
+
+                        GridLayout:
+                            id: board
+                            cols: 1
+                            rows: 8
+                            size_hint_y: 1
+                            row_force_default: True
+                            on_size: self.row_default_height = self.height / 8
+
+                            Label:
+                                id: box_0
+                                text: "Start"
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.4, 0.2, 0.1, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            Label:
+                                id: box_1
+                                text: ""
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 0, 0, 0, 0.1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            Label:
+                                id: box_2
+                                text: ""
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 1, 1, 1, 0.2
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            RelativeLayout:
+                                id: box_3
+                                canvas.before:
+                                    Color:
+                                        rgba: 0, 0, 0, 0.1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                Image:
+                                    source: "assets/danger.png"
+
+                            Label:
+                                id: box_4
+                                text: ""
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 1, 1, 1, 0.2
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            Label:
+                                id: box_5
+                                text: ""
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 0, 0, 0, 0.1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            Label:
+                                id: box_6
+                                text: ""
+                                color: 1, 1, 1, 1
+                                canvas.before:
+                                    Color:
+                                        rgba: 1, 1, 1, 0.2
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                            RelativeLayout:
+                                id: box_7
+                                Image:
+                                    source: "assets/final.png"
+
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: max(dp(84), root.height * 0.14)
+                padding: dp(10)
+                spacing: dp(10)
+
+                BoxLayout:
+                    size_hint: None, None
+                    size: (dp(180), dp(74)) if root._num_players == 3 else (0, 0)
+                    opacity: 1 if root.player3_name and root._num_players == 3 else 0
+                    disabled: False if root.player3_name and root._num_players == 3 else True
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.45
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [18]
 
                     RelativeLayout:
-                        id: box_7
-                        Image:
-                            source: "assets/final.png"
+                        size_hint: None, None
+                        size: dp(58), dp(58)
+                        ButtonImage:
+                            id: p3_pic
+                            source: "assets/default.png"
+                            on_release: root.show_player_info(2)
+                        Widget:
+                            id: p3_overlay
+                            size_hint: 1, 1
+                            opacity: 0
+                            canvas.before:
+                                Color:
+                                    rgba: 1, 0, 0, self.opacity
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
 
-        # Coin layer
+                    Label:
+                        id: p3_name_label
+                        text: root.player3_name
+                        font_size: sp(15)
+                        color: 1, 1, 1, 1
+                        halign: "left"
+                        valign: "middle"
+                        text_size: self.size
+
         FloatLayout:
             id: coin_layer
             size_hint: 1, 1
 
-        # Exit button
-        Button:
-            text: "GIVE UP"
-            size_hint: None, None
-            size: dp(100), dp(38)
-            pos_hint: {"center_x": 0.5, "y": 0.02}
-            background_color: (1, 0, 0, 0.8)
-            on_release: root.force_player_exit()
