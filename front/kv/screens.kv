@@ -56,6 +56,24 @@
                 on_release: root.manager.current = 'register'
 
         Label:
+            id: star1
+            text: "*"
+            font_size: sp(32)
+            color: 1, 1, 0.7, 0.8
+            size_hint: None, None
+            size: dp(30), dp(30)
+            pos_hint: {"x": 0.18, "y": 0.72}
+
+        Label:
+            id: star2
+            text: "*"
+            font_size: sp(28)
+            color: 1, 0.9, 0.6, 0.7
+            size_hint: None, None
+            size: dp(26), dp(26)
+            pos_hint: {"x": 0.72, "y": 0.78}
+
+        Label:
             text: "© 2025 SRTech Games"
             font_size: min(self.width * 0.035, sp(14))
             color: 1, 1, 1, 0.7
@@ -495,15 +513,15 @@
                     font_size: "15sp"
                     on_release: app.selected_mode = 3
 
-        # Exit App Button (bottom-left)
+        # Logout Button (bottom-left)
         Button:
-            text: "Exit App"
+            text: "Logout"
             size_hint: None, None
             size: dp(100), dp(40)
             pos_hint: {"x": 0.03, "y": 0.03}
             font_size: "14sp"
-            background_color: 1, 0, 0, 0.8
-            on_release: root.confirm_exit()
+            background_color: 0.8, 0.1, 0.1, 0.9
+            on_release: root.logout_to_login()
 
 #:import dp kivy.metrics.dp
 #:import sp kivy.metrics.sp
