@@ -56,6 +56,24 @@
                 on_release: root.manager.current = 'register'
 
         Label:
+            id: star1
+            text: "*"
+            font_size: sp(32)
+            color: 1, 1, 0.7, 0.8
+            size_hint: None, None
+            size: dp(30), dp(30)
+            pos_hint: {"x": 0.18, "y": 0.72}
+
+        Label:
+            id: star2
+            text: "*"
+            font_size: sp(28)
+            color: 1, 0.9, 0.6, 0.7
+            size_hint: None, None
+            size: dp(26), dp(26)
+            pos_hint: {"x": 0.72, "y": 0.78}
+
+        Label:
             text: "© 2025 SRTech Games"
             font_size: min(self.width * 0.035, sp(14))
             color: 1, 1, 1, 0.7
