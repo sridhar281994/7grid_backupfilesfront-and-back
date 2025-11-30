@@ -513,15 +513,15 @@
                     font_size: "15sp"
                     on_release: app.selected_mode = 3
 
-        # Exit App Button (bottom-left)
+        # Logout Button (bottom-left)
         Button:
-            text: "Exit App"
+            text: "Logout"
             size_hint: None, None
             size: dp(100), dp(40)
             pos_hint: {"x": 0.03, "y": 0.03}
             font_size: "14sp"
-            background_color: 1, 0, 0, 0.8
-            on_release: root.confirm_exit()
+            background_color: 0.8, 0.1, 0.1, 0.9
+            on_release: root.logout_to_login()
 
 #:import dp kivy.metrics.dp
 #:import sp kivy.metrics.sp

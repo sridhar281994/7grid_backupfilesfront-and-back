@@ -3,7 +3,6 @@ from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.clock import Clock
 from kivy.graphics import RoundedRectangle, Color
@@ -278,24 +277,15 @@ class StageScreen(Screen):
     def go_to_settings(self):
         self.manager.current = "settings"
 
-    def confirm_exit(self):
-        layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
-        layout.add_widget(Label(text="Are you sure you want to exit?"))
-        button_box = BoxLayout(spacing=10, size_hint_y=None, height=self._scale(40))
-        btn_yes = Button(text="Yes", font_size=self._font(15))
-        btn_no = Button(text="No", font_size=self._font(15))
-        button_box.add_widget(btn_yes)
-        button_box.add_widget(btn_no)
-        layout.add_widget(button_box)
-        popup = Popup(
-            title="Exit Confirmation",
-            content=layout,
-            size_hint=(None, None),
-            size=(self._scale(300), self._scale(180)),
-            auto_dismiss=False,
-        )
-        btn_yes.bind(
-            on_release=lambda *_: (popup.dismiss(), App.get_running_app().stop())
-        )
-        btn_no.bind(on_release=popup.dismiss)
-        popup.open()
+    def logout_to_login(self):
+        """Clear local session data and send the user back to login."""
+        if storage:
+            storage.clear_all()
+
+        app = App.get_running_app()
+        for attr in ("user_token", "user_id", "selected_stake"):
+            if hasattr(app, attr):
+                setattr(app, attr, None)
+
+        if self.manager:
+            self.manager.current = "login"
