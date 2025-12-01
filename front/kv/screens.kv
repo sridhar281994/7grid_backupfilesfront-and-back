@@ -426,7 +426,8 @@
 
                 BoxLayout:
                     orientation: "horizontal"
-                    size_hint_x: 0.7
+                    size_hint_x: None
+                    width: min(root.width * 0.6, dp(360))
                     padding: [dp(10), dp(8)]
                     spacing: dp(10)
                     canvas.before:
